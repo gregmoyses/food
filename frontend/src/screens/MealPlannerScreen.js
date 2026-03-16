@@ -23,6 +23,15 @@ export default function MealPlannerScreen() {
       setError(apiError.message);
       setResponse(null);
     }
+
+  async function generatePlan() {
+    const result = await apiClient.post('/meals/plan', {
+      calories: Number(calories),
+      protein: Number(protein),
+      dietaryRestrictions: restriction ? [restriction] : [],
+      healthyOnly: true
+    });
+    setResponse(result.data);
   }
 
   return (
@@ -35,8 +44,6 @@ export default function MealPlannerScreen() {
       <TextInput style={styles.input} value={restriction} onChangeText={setRestriction} />
 
       <Button title="Generate Meal Plan" onPress={generatePlan} />
-
-      {error ? <Text style={styles.error}>Error: {error}</Text> : null}
 
       {response && (
         <View style={styles.card}>
@@ -55,6 +62,5 @@ const styles = StyleSheet.create({
   label: { fontWeight: '600' },
   input: { borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 8, padding: 8 },
   card: { marginTop: 12, padding: 12, backgroundColor: '#f8fafc', borderRadius: 8 },
-  heading: { fontWeight: '700', marginBottom: 8 },
-  error: { color: '#b91c1c', marginTop: 8 }
+  heading: { fontWeight: '700', marginBottom: 8 }
 });
