@@ -7,6 +7,22 @@ export default function MealPlannerScreen() {
   const [protein, setProtein] = useState('100');
   const [restriction, setRestriction] = useState('vegetarian');
   const [response, setResponse] = useState(null);
+  const [error, setError] = useState('');
+
+  async function generatePlan() {
+    try {
+      setError('');
+      const result = await apiClient.post('/meals/plan', {
+        calories: Number(calories),
+        protein: Number(protein),
+        dietaryRestrictions: restriction ? [restriction] : [],
+        healthyOnly: true
+      });
+      setResponse(result.data);
+    } catch (apiError) {
+      setError(apiError.message);
+      setResponse(null);
+    }
 
   async function generatePlan() {
     const result = await apiClient.post('/meals/plan', {

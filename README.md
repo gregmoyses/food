@@ -44,3 +44,6 @@ npm test
 - Robust API error handling and input validation
 
 See `docs/API_EXAMPLES.md` for request/response samples.
+
+## Run on your phone
+For step-by-step iOS/Android instructions (Expo + backend LAN setup + manual test plan), see `docs/PHONE_BUILD_AND_TEST.md`.
